@@ -1,0 +1,26 @@
+[
+ {
+    "CheckValue": "CardExpiryChanged",
+    "CardType": "VISA",
+    "CardType2":"VISA",
+    "CardNumber": "4000000000001000",
+    "CreditCardShortnum":"1000",
+    "CVV":"",
+    "Country": "AU",
+    "AcceptLanguage": "EN_AU",
+    "language": "en",
+    "currency_code": "AUD",
+    "street1": "",
+    "city": "",
+    "postalCode": "1222",
+    "Fname":"martand",
+    "Lname":"abhishek",
+    "VatId" : "",
+    "orderType":"ind"
+    
+  }
+
+    
+
+ 
+]

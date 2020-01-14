@@ -1,0 +1,1095 @@
+{
+	"info": {
+		"_postman_id": "a94286fc-3f6b-4cf5-8102-b4527ad61ae9",
+		"name": "Initial purchase IND/Teams",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Initial Purchase",
+			"item": [
+				{
+					"name": "Create User",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "44e7278c-28ee-434c-828c-f8d3b3b92898",
+								"exec": [
+									"var random = Math.floor(Math.random() * 10000001);",
+									"pm.globals.set(\"randomNum\", random);",
+									"var random = Math.floor(Math.random() * 10000001);",
+									"pm.globals.set(\"randomNum\", random);",
+									"console.info(\"e2eauto\"+\"+\"+\"_\"+random+\"@adobetest.com\");",
+									"pm.globals.set(\"EmailID\", \"e2eauto\"+\"+\"+\"_\"+random+\"@adobetest.com\");",
+									"",
+									"email=pm.globals.get(\"EmailID\");",
+									"email=email.replace(\"+\",\"%2B\");",
+									"email=email.replace(\"@\",\"%40\");",
+									"email=email.replace(\".\",\"%2E\");",
+									"pm.globals.set(\"Encoded_EmailID\", email);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "f55d0392-5031-490d-a7ed-fc5bc7798a20",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "text/xml",
+								"type": "text"
+							},
+							{
+								"key": "charset",
+								"value": "UTF-8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><ReqBody version=\"1.9.11\" clientId=\"Test_Client\" options=\"prettyOutput\"><req dest=\"UserManagement\" api=\"createPerson\"><ClientAppDescriptor /><Person><firstName>E2eAutomationPostman</firstName><lastName>User</lastName><eMail>{{EmailID}}</eMail><dob>1991-04-22 08:10:35.337</dob><shortForm>true</shortForm><countryCode>US</countryCode><credentials class=\"Credentials\"><password>Automation#1</password><username>{{EmailID}}</username></credentials></Person><AuthRequest /></req></ReqBody>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://na1r-stg1.services.adobe.com/account/amfgateway2",
+							"protocol": "https",
+							"host": [
+								"na1r-stg1",
+								"services",
+								"adobe",
+								"com"
+							],
+							"path": [
+								"account",
+								"amfgateway2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get IMS Token",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "7bae2767-8e5d-4112-ba91-153019cf5814",
+								"exec": [
+									"\r",
+									"//email=pm.environment.get(\"EmailID\");\r",
+									"//pass=\"Automation#1\";\r",
+									"/*var Base64={_keyStr:\"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=\",encode:function(e){var t=\"\";var n,r,i,s,o,u,a;var f=0;e=Base64._utf8_encode(e);while(f<e.length){n=e.charCodeAt(f++);r=e.charCodeAt(f++);i=e.charCodeAt(f++);s=n>>2;o=(n&3)<<4|r>>4;u=(r&15)<<2|i>>6;a=i&63;if(isNaN(r)){u=a=64}else if(isNaN(i)){a=64}t=t+this._keyStr.charAt(s)+this._keyStr.charAt(o)+this._keyStr.charAt(u)+this._keyStr.charAt(a)}return t},decode:function(e){var t=\"\";var n,r,i;var s,o,u,a;var f=0;e=e.replace(/++[++^A-Za-z0-9+/=]/g,\"\");while(f<e.length){s=this._keyStr.indexOf(e.charAt(f++));o=this._keyStr.indexOf(e.charAt(f++));u=this._keyStr.indexOf(e.charAt(f++));a=this._keyStr.indexOf(e.charAt(f++));n=s<<2|o>>4;r=(o&15)<<4|u>>2;i=(u&3)<<6|a;t=t+String.fromCharCode(n);if(u!=64){t=t+String.fromCharCode(r)}if(a!=64){t=t+String.fromCharCode(i)}}t=Base64._utf8_decode(t);return t},_utf8_encode:function(e){e=e.replace(/\\r\\n/g,\"n\");var t=\"\";for(var n=0;n<e.length;n++){var r=e.charCodeAt(n);if(r<128){t+=String.fromCharCode(r)}else if(r>127&&r<2048){t+=String.fromCharCode(r>>6|192);t+=String.fromCharCode(r&63|128)}else{t+=String.fromCharCode(r>>12|224);t+=String.fromCharCode(r>>6&63|128);t+=String.fromCharCode(r&63|128)}}return t},_utf8_decode:function(e){var t=\"\";var n=0;var r=c1=c2=0;while(n<e.length){r=e.charCodeAt(n);if(r<128){t+=String.fromCharCode(r);n++}else if(r>191&&r<224){c2=e.charCodeAt(n+1);t+=String.fromCharCode((r&31)<<6|c2&63);n+=2}else{c2=e.charCodeAt(n+1);c3=e.charCodeAt(n+2);t+=String.fromCharCode((r&15)<<12|(c2&63)<<6|c3&63);n+=3}}return t}};\r",
+									"//var encodedString = Base64.encode(email);\r",
+									"//pm.environment.set(\"Encoded_EmailID\", encodedString);\r",
+									"//var encodedpwd=Base64.encode(pass);\r",
+									"//pm.environment.set(\"Encoded_Password\", encodedpwd);\r",
+									"console.log(encodedString);\r",
+									"console.log(encodedpwd);*/\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "088b5359-71b1-4009-b7ac-5365544899c6",
+								"exec": [
+									"var ResBody = JSON.parse(responseBody);\r",
+									"var accesstoken = ResBody.access_token;\r",
+									"pm.globals.set(\"AccessToken\", accesstoken);\r",
+									"\r",
+									"orderType=data.orderType;\r",
+									"if(orderType.toLowerCase()==\"individual\"||orderType.toLowerCase()==\"ind\")\r",
+									"{\r",
+									"     postman.setNextRequest(\"create orderIND\");\r",
+									"     \r",
+									"}\r",
+									"else if(orderType.toLowerCase()==\"team\"||orderType.toLowerCase()==\"teams\")\r",
+									"{\r",
+									"     postman.setNextRequest(\"create orderTeam\");\r",
+									"}\r",
+									"else\r",
+									"{\r",
+									"    console.error(orderType+\"  this is Invalid selection(please select IND or Team\");\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://ims-na1-stg1.adobelogin.com/ims/login/v1/token?client_id=adobedotcom1&username={{Encoded_EmailID}}&password=Automation%231&scope=openid%2Ccreative_cloud%2CAdobeID",
+							"protocol": "https",
+							"host": [
+								"ims-na1-stg1",
+								"adobelogin",
+								"com"
+							],
+							"path": [
+								"ims",
+								"login",
+								"v1",
+								"token"
+							],
+							"query": [
+								{
+									"key": "client_id",
+									"value": "adobedotcom1"
+								},
+								{
+									"key": "username",
+									"value": "{{Encoded_EmailID}}"
+								},
+								{
+									"key": "password",
+									"value": "Automation%231"
+								},
+								{
+									"key": "scope",
+									"value": "openid%2Ccreative_cloud%2CAdobeID"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create orderIND",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6a7ee38d-b685-4f55-82c2-90e9a407d03e",
+								"exec": [
+									"var orderbody=JSON.parse(responseBody);",
+									"var orderid=orderbody[\"order-id\"];",
+									"var ordernum=orderbody[\"order-number\"];",
+									"var userID=orderbody[\"user-id\"];",
+									"pm.globals.set(\"createOrderBody\", responseBody);",
+									"pm.globals.set(\"OrderID\", orderid);",
+									"pm.globals.set(\"OrderNum\", ordernum);",
+									"pm.globals.set(\"UserID1\", userID);",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "a8f9ff6f-f032-4d4d-af42-4b8be900d791",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "charset",
+								"value": "UTF-8",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-api-key",
+								"value": " unified_checkout",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{AccessToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "EN_US",
+								"type": "text"
+							},
+							{
+								"key": "x-adobe-features",
+								"value": "87e2a359-97a5-4000-affb-222d989cc866,ac5cd21f-e832-4bd4-b51c-3e0a03e9f016,a0ce51cd-64c8-4980-bf58-26554ed6afa9,2986df76-8174-488b-9b65-3457f564d93e,55000eae-2e74-485a-b3b3-b79d5be91eef,3f059550-81a5-469a-aa83-3cc6b24ca15d,1b3a94c5-0799-47fc-bbf2-316a02c1cac2,c89bc749-ddbb-4bf3-adf8-8ce78ab5a984,7f185bd1-af05-47a8-ad09-f8ba32e92a16,10257d12-7998-482a-8246-3abf4d625704",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"country\":\"{{Country}}\",\"promotions\":[],\"identity\":{\"analytics\":{\"ac\":\"commerce.adobe.com\"},\"target-client\":{\"callback-url\":\"https://www.adobe.com\",\"scopes\":\"AdobeID,openid,sao.stock,additional_info.roles,additional_info.vat_id,update_profile.countryCode,additional_info.dob\",\"client-id\":\"unified_checkout\"},\"email\":\"\"},\"language\":\"{{language}}\",\"purchase-flow\":\"creative\",\"items\":[{\"quantity\":\"1\",\"offer-id\":\"632B3ADD940A7FBB7864AA5AD19B8D28\"}],\"market-segment\":\"COM\",\"status\":\"IN_PROGRESS\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://commerce-stg.adobe.com/v3/orders/",
+							"protocol": "https",
+							"host": [
+								"commerce-stg",
+								"adobe",
+								"com"
+							],
+							"path": [
+								"v3",
+								"orders",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create orderTeam",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6a7ee38d-b685-4f55-82c2-90e9a407d03e",
+								"exec": [
+									"var orderbody=JSON.parse(responseBody);",
+									"var orderid=orderbody[\"order-id\"];",
+									"var ordernum=orderbody[\"order-number\"];",
+									"var userID=orderbody[\"user-id\"];",
+									"pm.globals.set(\"createOrderBody\", responseBody);",
+									"pm.globals.set(\"OrderID\", orderid);",
+									"pm.globals.set(\"OrderNum\", ordernum);",
+									"pm.globals.set(\"UserID1\", userID);",
+									"postman.setNextRequest(\"Payment tokenTeam\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "0e57d73a-6653-4052-a4f7-ad00d879dbe3",
+								"exec": [
+									"",
+									"// country=pm.globals.get(\"Country\");",
+									"// if(country==\"IN\")",
+									"// {",
+									"// pm.globals.set(\"AcceptLanguage\", \"EN_IN\");",
+									"// pm.globals.set(\"language\", \"en\");",
+									"// pm.globals.set(\"currency_code\", \"INR\");",
+									"// pm.globals.set(\"street1\", \"PO BOX 190\");",
+									"// pm.globals.set(\"city\", \"Bangalore\");",
+									"// pm.globals.set(\"postalCode\", \"560037\");",
+									"// console.info(country);",
+									"// }",
+									"// else if(country==\"KR\")",
+									"// {",
+									"// pm.globals.set(\"AcceptLanguage\", \"KO_KR\");",
+									"// pm.globals.set(\"language\", \"ko\");",
+									"// pm.globals.set(\"currency_code\", \"KRW\");",
+									"// pm.globals.set(\"street1\", \"200 Songcheonjungang-ro\");",
+									"// pm.globals.set(\"city\", \"Jeollabuk-do\");",
+									"// pm.globals.set(\"postalCode\", \"V47C+WQ\");",
+									"// console.info(country);",
+									"// }"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "charset",
+								"value": "UTF-8",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-api-key",
+								"value": " unified_checkout",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{AccessToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "{{AcceptLanguage}}",
+								"type": "text"
+							},
+							{
+								"key": "x-adobe-features",
+								"value": "87e2a359-97a5-4000-affb-222d989cc866,ac5cd21f-e832-4bd4-b51c-3e0a03e9f016,a0ce51cd-64c8-4980-bf58-26554ed6afa9,2986df76-8174-488b-9b65-3457f564d93e,55000eae-2e74-485a-b3b3-b79d5be91eef,3f059550-81a5-469a-aa83-3cc6b24ca15d,1b3a94c5-0799-47fc-bbf2-316a02c1cac2,c89bc749-ddbb-4bf3-adf8-8ce78ab5a984,7f185bd1-af05-47a8-ad09-f8ba32e92a16,10257d12-7998-482a-8246-3abf4d625704",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"country\":\"{{Country}}\",\"promotions\":[],\"identity\":{\"analytics\":{\"ac\":\"commerce.adobe.com\"},\"target-client\":{\"callback-url\":\"https://www.adobe.com\",\"scopes\":\"AdobeID,openid,sao.stock,additional_info.roles,additional_info.vat_id,update_profile.countryCode,additional_info.dob\",\"client-id\":\"unified_checkout\"},\"email\":\"\"},\"language\":\"en\",\"purchase-flow\":\"creative\",\"items\":[{\"quantity\":\"5\",\"offer-id\":\"7B3FB5E4F8662A207A960BAFB6B1C21C\"}],\"market-segment\":\"COM\",\"status\":\"IN_PROGRESS\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://commerce-stg.adobe.com/v3/orders/",
+							"protocol": "https",
+							"host": [
+								"commerce-stg",
+								"adobe",
+								"com"
+							],
+							"path": [
+								"v3",
+								"orders",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Payment tokenIND",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "df979728-7612-4690-9982-872c266b122b",
+								"exec": [
+									"var token=JSON.parse(responseBody);",
+									"x_adobe_token_Value = token.payment_token.token_id;",
+									"pm.globals.set(\"x_adobe_token1\", x_adobe_token_Value);",
+									"postman.setNextRequest(\"confirm orderIND\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "e24c28c5-0fe1-4f0e-9acb-73879ab76175",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "charset",
+								"type": "text",
+								"value": "UTF-8"
+							},
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": " application/json, text/javascript, */*; q=0.01"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{  \"payment_token\": {    \"currency_code\": \"{{currency_code}}\",    \"client_id\": \"unified_checkout_client\",    \"payment_instrument\": {      \"@xsi.type\": \"CreditCardPaymentInstrument\",      \"payment_type\": \"{{CardType}}\",      \"credit_card_number\": \"{{CardNumber}}\",      \"credit_card_expiry_date_display\": \"10/2020\",\"cv_code\": \"{{CVV}}\",      \"assigned_address\": {\"postalCode\": \"{{postalCode}}\",        \"contact\": {          \"firstName\": \"E2eAutomationPostman\",          \"lastName\": \"User\",          \"primaryEmail\": \"{{EmailID}}\"        },        \"country\": {          \"iso_3166_alpha2_code\": \"{{Country}}\"        }      }    }  }}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://commerce-stg.adobe.com/v4/payment_tokens?api_key=unified_checkout",
+							"protocol": "https",
+							"host": [
+								"commerce-stg",
+								"adobe",
+								"com"
+							],
+							"path": [
+								"v4",
+								"payment_tokens"
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "unified_checkout"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Payment tokenTeam",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "df979728-7612-4690-9982-872c266b122b",
+								"exec": [
+									"var token=JSON.parse(responseBody);",
+									"console.info(\"payment token body:\"+responseBody)",
+									"x_adobe_token_Value = token.payment_token.token_id;",
+									"pm.globals.set(\"x_adobe_token1\", x_adobe_token_Value);",
+									"postman.setNextRequest(\"confirm orderTeam\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "151ab419-a4e0-4876-8640-e6877440344b",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "charset",
+								"value": "UTF-8",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": " application/json, text/javascript, */*; q=0.01",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{  \"payment_token\": {    \"currency_code\": \"{{currency_code}}\",    \"client_id\": \"unified_checkout_client\",    \"payment_instrument\": {      \"@xsi.type\": \"CreditCardPaymentInstrument\",      \"payment_type\": \"{{CardType}}\",      \"credit_card_number\": \"{{CardNumber}}\",      \"credit_card_expiry_date_display\": \"10/2020\",      \"assigned_address\": {\"postalCode\": \"{{postalCode}}\",        \"contact\": {          \"firstName\": \"{{Fname}}\",          \"lastName\": \"{{Lname}}\",          \"primaryEmail\": \"{{EmailID}}\"        },        \"country\": {          \"iso_3166_alpha2_code\": \"{{Country}}\"        }      }    }  }}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://commerce-stg.adobe.com/v4/payment_tokens?api_key=unified_checkout",
+							"protocol": "https",
+							"host": [
+								"commerce-stg",
+								"adobe",
+								"com"
+							],
+							"path": [
+								"v4",
+								"payment_tokens"
+							],
+							"query": [
+								{
+									"key": "api_key",
+									"value": "unified_checkout"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "confirm orderIND",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "718ab1ca-2753-4a0c-9262-260809f2d442",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"jsonData.status=\"SUBMITTED\"; ",
+									"pm.globals.set(\"confirmOrder_ResponseBody\", JSON.stringify(jsonData));"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "0367c9f3-74cb-4141-8ae1-335159802fcd",
+								"exec": [
+									"orderType=\"{{orderType}}\";",
+									"if(orderType.toLowerCase().includes(\"ind\") || orderType.toLowerCase()==\"individual\")",
+									"{",
+									"   createconfirmorderbody={",
+									"   \"order-id\":\"{{OrderID}}\",",
+									"   \"order-number\":\"{{OrderNum}}\",",
+									"   \"order-date\":\"2019-11-29T04:51:53.921Z\",",
+									"   \"market-segment\":\"COM\",",
+									"   \"country\":\"{{Country}}\",",
+									"   \"status\":\"IN_PROGRESS\",",
+									"   \"user-id\":\"{{UserID1}}\",",
+									"   \"user-login-name\":\"{{EmailID}}\",",
+									"   \"identity\":{",
+									"      \"target-client\":{",
+									"         \"client-id\":\"unified_checkout\",",
+									"         \"scopes\":\"AdobeID,openid,sao.stock,additional_info.roles,additional_info.vat_id,update_profile.countryCode,additional_info.dob\",",
+									"         \"callback-url\":\"https://www.adobe.com\"",
+									"      },",
+									"      \"analytics\":{",
+									"         \"ac\":\"commerce.adobe.com\"",
+									"      }",
+									"   },",
+									"   \"locale\":\"{{AcceptLanguage}}\",",
+									"   \"tax-calculated\":true,",
+									"   \"payment-instrument\":{",
+									"      \"category\":\"CREDIT_CARD\",",
+									"      \"billing-address\":{",
+									"         \"street1\":\"\",",
+									"         \"postal-code\":\"{{postalCode}}\",",
+									"         \"country\":{",
+									"            \"code\":\"{{Country}}\"",
+									"         },",
+									"         \"city\":\"\",",
+									"         \"state-province\":{",
+									"",
+									"         },",
+									"         \"contact\":{",
+									"            \"last-name\":\"User\",",
+									"            \"first-name\":\"E2eAutomationPostman\",",
+									"            \"user-email\":\"{{EmailID}}\",",
+									"            \"pronunciation-last-name\":\"\",",
+									"            \"pronunciation-first-name\":\"\",",
+									"            \"vat-id\":\"{{VatId}}\",",
+									"            \"company-name\":\"\",",
+									"            \"pronunciation-company-name\":\"\"",
+									"         }",
+									"      },",
+									"      \"type\":\"{{CardType}}\",",
+									"      \"credit-card-number\":\"{{x_adobe_token1}}\",",
+									"      \"credit-card-short-number\":\"{{CreditCardShortnum}}\",",
+									"      \"order-id\":\"{{OrderID}}\",",
+									"      \"credit-card-expire-date\":\"2020-10-27T18:30:00Z\"",
+									"   },",
+									"   \"available-payment-instruments\":[",
+									"      {",
+									"         \"category\":\"CREDIT_CARD\",",
+									"         \"type\":\"VISA\",",
+									"         \"is-saved-allowed\":false",
+									"      },",
+									"      {",
+									"         \"category\":\"CREDIT_CARD\",",
+									"         \"type\":\"MASTERCARD\",",
+									"         \"is-saved-allowed\":false",
+									"      },",
+									"      {",
+									"         \"category\":\"CREDIT_CARD\",",
+									"         \"type\":\"AMEX\",",
+									"         \"is-saved-allowed\":false",
+									"      }",
+									"   ],",
+									"   \"items\":[",
+									"      {",
+									"         \"quantity\":1,",
+									"         \"sku\":{",
+									"            \"id\":\"65182910\",",
+									"            \"sap-product-code\":\"CCSN\"",
+									"         },",
+									"         \"offer-id\":\"632B3ADD940A7FBB7864AA5AD19B8D28\",",
+									"         \"savings\":0,",
+									"         \"savings-with-tax\":0,",
+									"         \"unit-price\":3585,",
+									"         \"unit-price-with-tax\":4230.3,",
+									"         \"base-price\":3585,",
+									"         \"base-price-with-tax\":4230.3,",
+									"         \"base-tax\":645.3,",
+									"         \"annual-price\":43020,",
+									"         \"annual-price-with-tax\":50763.6,",
+									"         \"discount-price\":3585,",
+									"         \"discount-price-with-tax\":4230.3,",
+									"         \"total-tax\":645.3,",
+									"         \"tax-rate\":18,",
+									"         \"line-item-status\":{",
+									"            \"reason-code\":\"ELIGIBLE\"",
+									"         },",
+									"         \"authorization-group\":\"SUB_COM_IN_MO\"",
+									"      }",
+									"   ],",
+									"   \"base-total-with-tax\":4230.3,",
+									"   \"base-total\":3585,",
+									"   \"base-total-tax\":645.3,",
+									"   \"discount-total-with-tax\":4230.3,",
+									"   \"discount-total\":3585,",
+									"   \"savings-total\":0,",
+									"   \"savings-total-with-tax\":0,",
+									"   \"total-tax\":645.3,",
+									"   \"currency-code\":\"{{currency_code}}\",",
+									"   \"type\":\"NEW_ORDER\",",
+									"   \"purchase-flow\":\"creative\",",
+									"   \"customer-ip\":\"103.43.114.129\",",
+									"   \"has-appstore-subscriptions\":false",
+									"}; ",
+									"   ",
+									"pm.globals.set(\"CreateConfirmOrderBody\", createconfirmorderbody);",
+									"}",
+									"else if(orderType.toLowerCase().includes(\"team\") || orderType.toLowerCase()==\"teams\")",
+									"{",
+									"   createconfirmorderbody={",
+									"  \"order-id\": \"{{OrderID}}\",",
+									"  \"order-number\": \"{{OrderNum}}\",",
+									"  \"order-date\": \"2020-01-13T09:34:58.279Z\",",
+									"  \"market-segment\": \"COM\",",
+									"  \"country\": \"{{Country}}\",",
+									"  \"status\": \"IN_PROGRESS\",",
+									"  \"user-id\": \"{{UserID1}}\",",
+									"  \"user-login-name\": \"{{EmailID}}\",",
+									"  \"identity\": {",
+									"    \"target-client\": {",
+									"      \"client-id\": \"unified_checkout\",",
+									"      \"scopes\": \"AdobeID,openid,sao.stock,additional_info.roles,additional_info.vat_id,update_profile.countryCode,additional_info.dob\",",
+									"      \"callback-url\": \"https://www.adobe.com\"",
+									"    },",
+									"    \"analytics\": {",
+									"      \"ac\": \"commerce.adobe.com\"",
+									"    }",
+									"  },",
+									"  \"locale\": \"{{AcceptLanguage}}\",",
+									"  \"tax-calculated\": true,",
+									"  \"payment-instrument\": {",
+									"    \"category\": \"CREDIT_CARD\",",
+									"    \"billing-address\": {",
+									"      \"street1\": \"\",",
+									"      \"postal-code\": \"{{postalCode}}\",",
+									"      \"country\": {",
+									"        \"code\": \"{{Country}}\"",
+									"      },",
+									"      \"city\": \"\",",
+									"      \"state-province\": {},",
+									"      \"contact\": {",
+									"        \"last-name\": \"{{Fname}}\",",
+									"        \"first-name\": \"{{Lname}}\",",
+									"        \"user-email\": \"{{EmailID}}\",",
+									"        \"pronunciation-last-name\": \"\",",
+									"        \"pronunciation-first-name\": \"\",",
+									"        \"vat-id\": \"{{VatId}}\",",
+									"        \"primary-phone\": \"(2)9778-4100\",",
+									"        \"company-name\": \"Adobe\",",
+									"        \"pronunciation-company-name\": \"\"",
+									"      }",
+									"    },",
+									"    \"type\": \"{{CardType}}\",",
+									"    \"credit-card-number\": \"{{x_adobe_token1}}\",",
+									"    \"credit-card-short-number\": \"{{CreditCardShortnum}}\",",
+									"    \"order-id\": \"{{OrderID}}\",",
+									"    \"credit-card-expire-date\": \"2020-10-27T18:30:00Z\"",
+									"  },",
+									"  \"available-payment-instruments\": [",
+									"    {",
+									"      \"category\": \"CREDIT_CARD\",",
+									"      \"type\": \"VISA\",",
+									"      \"is-saved-allowed\": false",
+									"    },",
+									"    {",
+									"      \"category\": \"CREDIT_CARD\",",
+									"      \"type\": \"MASTERCARD\",",
+									"      \"is-saved-allowed\": false",
+									"    },",
+									"    {",
+									"      \"category\": \"CREDIT_CARD\",",
+									"      \"type\": \"AMEX\",",
+									"      \"is-saved-allowed\": false",
+									"    },",
+									"    {",
+									"      \"category\": \"PAYPAL\",",
+									"      \"type\": \"PAYPAL\",",
+									"      \"is-saved-allowed\": false",
+									"    }",
+									"  ],",
+									"  \"items\": [",
+									"    {",
+									"      \"quantity\": 5,",
+									"      \"sku\": {",
+									"        \"id\": \"65206847\",",
+									"        \"sap-product-code\": \"CCLE\"",
+									"      },",
+									"      \"offer-id\": \"7B3FB5E4F8662A207A960BAFB6B1C21C\",",
+									"      \"savings\": 0,",
+									"      \"savings-with-tax\": 0,",
+									"      \"unit-price\": 105.45,",
+									"      \"unit-price-with-tax\": 116,",
+									"      \"base-price\": 527.25,",
+									"      \"base-price-with-tax\": 579.98,",
+									"      \"base-tax\": 52.73,",
+									"      \"annual-price\": 6327,",
+									"      \"annual-price-with-tax\": 6959.76,",
+									"      \"discount-price\": 527.25,",
+									"      \"discount-price-with-tax\": 579.98,",
+									"      \"total-tax\": 52.73,",
+									"      \"tax-rate\": 10,",
+									"      \"line-item-status\": {",
+									"        \"reason-code\": \"ELIGIBLE\"",
+									"      },",
+									"      \"authorization-group\": \"SUB_COM_TE_MO\"",
+									"    }",
+									"  ],",
+									"  \"base-total-with-tax\": 579.98,",
+									"  \"base-total\": 527.25,",
+									"  \"base-total-tax\": 52.73,",
+									"  \"discount-total-with-tax\": 579.98,",
+									"  \"discount-total\": 527.25,",
+									"  \"savings-total\": 0,",
+									"  \"savings-total-with-tax\": 0,",
+									"  \"total-tax\": 52.73,",
+									"  \"currency-code\": \"{{currency_code}}\",",
+									"  \"type\": \"NEW_ORDER\",",
+									"  \"purchase-flow\": \"creative\",",
+									"  \"customer-ip\": \"103.43.114.129\",",
+									"  \"has-appstore-subscriptions\": false",
+									"}; ",
+									"   ",
+									"pm.globals.set(\"CreateConfirmOrderBody\", createconfirmorderbody); ",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "charset",
+								"value": "UTF-8",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-api-key",
+								"value": " unified_checkout",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{AccessToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "EN_IN",
+								"type": "text"
+							},
+							{
+								"key": "x-adobe-features",
+								"value": "87e2a359-97a5-4000-affb-222d989cc866,ac5cd21f-e832-4bd4-b51c-3e0a03e9f016,a0ce51cd-64c8-4980-bf58-26554ed6afa9,2986df76-8174-488b-9b65-3457f564d93e,55000eae-2e74-485a-b3b3-b79d5be91eef,3f059550-81a5-469a-aa83-3cc6b24ca15d,1b3a94c5-0799-47fc-bbf2-316a02c1cac2,c89bc749-ddbb-4bf3-adf8-8ce78ab5a984,7f185bd1-af05-47a8-ad09-f8ba32e92a16,10257d12-7998-482a-8246-3abf4d625704",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://commerce-stg.adobe.com/v3/orders/{{OrderID}}",
+							"protocol": "https",
+							"host": [
+								"commerce-stg",
+								"adobe",
+								"com"
+							],
+							"path": [
+								"v3",
+								"orders",
+								"{{OrderID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "confirm orderTeam",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "718ab1ca-2753-4a0c-9262-260809f2d442",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"jsonData.status=\"SUBMITTED\"; ",
+									"pm.globals.set(\"confirmOrder_ResponseBody\", JSON.stringify(jsonData));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "charset",
+								"value": "UTF-8",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-api-key",
+								"value": " unified_checkout",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{AccessToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "EN_AU",
+								"type": "text"
+							},
+							{
+								"key": "x-adobe-features",
+								"value": "87e2a359-97a5-4000-affb-222d989cc866,ac5cd21f-e832-4bd4-b51c-3e0a03e9f016,a0ce51cd-64c8-4980-bf58-26554ed6afa9,2986df76-8174-488b-9b65-3457f564d93e,55000eae-2e74-485a-b3b3-b79d5be91eef,3f059550-81a5-469a-aa83-3cc6b24ca15d,1b3a94c5-0799-47fc-bbf2-316a02c1cac2,c89bc749-ddbb-4bf3-adf8-8ce78ab5a984,7f185bd1-af05-47a8-ad09-f8ba32e92a16,10257d12-7998-482a-8246-3abf4d625704",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"order-id\": \"{{OrderID}}\",\r\n  \"order-number\": \"{{OrderNum}}\",\r\n  \"order-date\": \"2020-01-13T09:34:58.279Z\",\r\n  \"market-segment\": \"COM\",\r\n  \"country\": \"{{Country}}\",\r\n  \"status\": \"IN_PROGRESS\",\r\n  \"user-id\": \"{{UserID1}}\",\r\n  \"user-login-name\": \"{{EmailID}}\",\r\n  \"identity\": {\r\n    \"target-client\": {\r\n      \"client-id\": \"unified_checkout\",\r\n      \"scopes\": \"AdobeID,openid,sao.stock,additional_info.roles,additional_info.vat_id,update_profile.countryCode,additional_info.dob\",\r\n      \"callback-url\": \"https://www.adobe.com\"\r\n    },\r\n    \"analytics\": {\r\n      \"ac\": \"commerce.adobe.com\"\r\n    }\r\n  },\r\n  \"locale\": \"{{AcceptLanguage}}\",\r\n  \"tax-calculated\": true,\r\n  \"payment-instrument\": {\r\n    \"category\": \"CREDIT_CARD\",\r\n    \"billing-address\": {\r\n      \"street1\": \"\",\r\n      \"postal-code\": \"{{postalCode}}\",\r\n      \"country\": {\r\n        \"code\": \"{{Country}}\"\r\n      },\r\n      \"city\": \"\",\r\n      \"state-province\": {},\r\n      \"contact\": {\r\n        \"last-name\": \"{{Fname}}\",\r\n        \"first-name\": \"{{Lname}}\",\r\n        \"user-email\": \"{{EmailID}}\",\r\n        \"pronunciation-last-name\": \"\",\r\n        \"pronunciation-first-name\": \"\",\r\n        \"vat-id\": \"{{VatId}}\",\r\n        \"primary-phone\": \"(2)9778-4100\",\r\n        \"company-name\": \"Adobe\",\r\n        \"pronunciation-company-name\": \"\"\r\n      }\r\n    },\r\n    \"type\": \"{{CardType}}\",\r\n    \"credit-card-number\": \"{{x_adobe_token1}}\",\r\n    \"credit-card-short-number\": \"{{CreditCardShortnum}}\",\r\n    \"order-id\": \"{{OrderID}}\",\r\n    \"credit-card-expire-date\": \"2020-10-27T18:30:00Z\"\r\n  },\r\n  \"available-payment-instruments\": [\r\n    {\r\n      \"category\": \"CREDIT_CARD\",\r\n      \"type\": \"VISA\",\r\n      \"is-saved-allowed\": false\r\n    },\r\n    {\r\n      \"category\": \"CREDIT_CARD\",\r\n      \"type\": \"MASTERCARD\",\r\n      \"is-saved-allowed\": false\r\n    },\r\n    {\r\n      \"category\": \"CREDIT_CARD\",\r\n      \"type\": \"AMEX\",\r\n      \"is-saved-allowed\": false\r\n    },\r\n    {\r\n      \"category\": \"PAYPAL\",\r\n      \"type\": \"PAYPAL\",\r\n      \"is-saved-allowed\": false\r\n    }\r\n  ],\r\n  \"items\": [\r\n    {\r\n      \"quantity\": 5,\r\n      \"sku\": {\r\n        \"id\": \"65206847\",\r\n        \"sap-product-code\": \"CCLE\"\r\n      },\r\n      \"offer-id\": \"7B3FB5E4F8662A207A960BAFB6B1C21C\",\r\n      \"savings\": 0,\r\n      \"savings-with-tax\": 0,\r\n      \"unit-price\": 105.45,\r\n      \"unit-price-with-tax\": 116,\r\n      \"base-price\": 527.25,\r\n      \"base-price-with-tax\": 579.98,\r\n      \"base-tax\": 52.73,\r\n      \"annual-price\": 6327,\r\n      \"annual-price-with-tax\": 6959.76,\r\n      \"discount-price\": 527.25,\r\n      \"discount-price-with-tax\": 579.98,\r\n      \"total-tax\": 52.73,\r\n      \"tax-rate\": 10,\r\n      \"line-item-status\": {\r\n        \"reason-code\": \"ELIGIBLE\"\r\n      },\r\n      \"authorization-group\": \"SUB_COM_TE_MO\"\r\n    }\r\n  ],\r\n  \"base-total-with-tax\": 579.98,\r\n  \"base-total\": 527.25,\r\n  \"base-total-tax\": 52.73,\r\n  \"discount-total-with-tax\": 579.98,\r\n  \"discount-total\": 527.25,\r\n  \"savings-total\": 0,\r\n  \"savings-total-with-tax\": 0,\r\n  \"total-tax\": 52.73,\r\n  \"currency-code\": \"{{currency_code}}\",\r\n  \"type\": \"NEW_ORDER\",\r\n  \"purchase-flow\": \"creative\",\r\n  \"customer-ip\": \"103.43.114.129\",\r\n  \"has-appstore-subscriptions\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://commerce-stg.adobe.com/v3/orders/{{OrderID}}",
+							"protocol": "https",
+							"host": [
+								"commerce-stg",
+								"adobe",
+								"com"
+							],
+							"path": [
+								"v3",
+								"orders",
+								"{{OrderID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Submit Order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7b066b90-11eb-4e32-9c50-d3db292aa242",
+								"exec": [
+									"setTimeout(()=>{},10000);",
+									"",
+									"email=pm.globals.get(\"EmailID\");",
+									"orderType=data.orderType;",
+									"if(orderType.toLowerCase()==\"individual\"||orderType.toLowerCase()==\"ind\")",
+									"{",
+									"console.info(\"New individual user is created :\"+email);",
+									"}",
+									"else if(orderType.toLowerCase()==\"team\")",
+									"{",
+									"  console.info(\"New Team user is created :\"+email);  ",
+									"}",
+									"var ResBody = JSON.parse(responseBody);",
+									"var ordern = ResBody[\"order-number\"];",
+									"pm.globals.set(\"OrderNumber\", ordern);",
+									"ordernum=pm.globals.get(\"OrderNumber\");",
+									"console.info(\"Order Number :\"+ordernum);",
+									"postman.setNextRequest(null);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "charset",
+								"type": "text",
+								"value": "UTF-8"
+							},
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json,text/plain,*/*"
+							},
+							{
+								"key": "x-api-key",
+								"type": "text",
+								"value": " unified_checkout_client"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{AccessToken}}"
+							},
+							{
+								"key": "Accept-Language",
+								"type": "text",
+								"value": "EN_IN"
+							},
+							{
+								"key": "x-adobe-features",
+								"type": "text",
+								"value": "87e2a359-97a5-4000-affb-222d989cc866,ac5cd21f-e832-4bd4-b51c-3e0a03e9f016,a0ce51cd-64c8-4980-bf58-26554ed6afa9,2986df76-8174-488b-9b65-3457f564d93e,55000eae-2e74-485a-b3b3-b79d5be91eef,3f059550-81a5-469a-aa83-3cc6b24ca15d,1b3a94c5-0799-47fc-bbf2-316a02c1cac2,c89bc749-ddbb-4bf3-adf8-8ce78ab5a984,7f185bd1-af05-47a8-ad09-f8ba32e92a16,10257d12-7998-482a-8246-3abf4d625704"
+							},
+							{
+								"key": "addFlags",
+								"value": "uc_psd2,ucp_atf%26atf=USE_SMOKE_TEST_RULES,0727585d-33fd-40a4-99a8-b67e1d55a1ed",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{{confirmOrder_ResponseBody}}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://commerce-stg.adobe.com/v3/orders/{{OrderID}}?",
+							"protocol": "https",
+							"host": [
+								"commerce-stg",
+								"adobe",
+								"com"
+							],
+							"path": [
+								"v3",
+								"orders",
+								"{{OrderID}}"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "9bbfada6-f3f1-42fe-a2a6-5409e3988711",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "6d3d89b9-8d98-4a7c-ba64-959b23135f5d",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": []
+}
